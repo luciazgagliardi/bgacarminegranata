@@ -7,7 +7,7 @@ video that is scrubbed by scroll: vineyard → house → doorway → cellar → 
 index.html        page + chapter copy (edit the Spanish text here)
 css/style.css     palette tokens in :root — retune to match the main site
 js/main.js        scroll → video engine, chapters, rail, reveals
-assets/video/     journey-1280.mp4 (desktop) · journey-854.mp4 (mobile / data saver)
+assets/video/     scene-1..4-1080.mp4 (full res) · scene-1..4-720.mp4 (phones held upright)
 assets/img/       poster, stills for the cards, og.jpg
 ```
 
@@ -20,12 +20,17 @@ expressed as scroll progress 0–1 through the video (38 s ≈ 913 frames).
 Scroll length is `.hero { height: 1000vh }` in `css/style.css`.
 
 ## Re-encoding the video
-Scrubbing needs every frame to be a keyframe (`-g 1`), otherwise seeking stutters:
+Each of the four source clips is its own file, played back to back. The page loads
+scene 1 first, opens, and loads the rest behind it. A keyframe every 4 frames keeps
+scrubbing smooth while keeping each file under 15 MB:
 
 ```
-ffmpeg -i in.mp4 -vf scale=1280:720 -c:v libx264 -preset slow -crf 27 -g 1 -bf 0 \
-       -pix_fmt yuv420p -movflags +faststart -an journey-1280.mp4
+ffmpeg -i clip.mp4 -c:v libx264 -preset slow -crf 19 -g 4 -keyint_min 4 -bf 0 \
+       -pix_fmt yuv420p -movflags +faststart -an scene-1-1080.mp4
 ```
+Clips 2–4 drop their first frame (`-vf trim=start_frame=1,setpts=PTS-STARTPTS`),
+because it repeats the last frame of the clip before. If you have higher-resolution
+masters, re-encode from those; the page picks 1080 or 720 by screen size.
 
 ## To review before publishing
 - Hero chapter text is the winery's own copy. The sections below the video (cards, visits,

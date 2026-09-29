@@ -2,10 +2,11 @@
  *
  * How it works
  *  - The hero is a tall section with a sticky 100vh "stage".
- *  - Scroll position inside the hero -> progress (0..1) -> video.currentTime.
- *  - The video is encoded with every frame as a keyframe (see README), so seeking
- *    to any timestamp is instant and scrubbing is smooth in both directions.
- *  - The whole file is downloaded into a Blob first, so seeks never wait on the network.
+ *  - Scroll position inside the hero -> progress (0..1) -> a time in the four
+ *    scenes, which play back to back as one continuous shot.
+ *  - Each scene is its own full-resolution file (keyframe every 4 frames, see
+ *    README), so seeking is quick and each file stays under 15 MB.
+ *  - Scene 1 loads first and opens the page; the others load behind it.
  *  - Chapter copy fades in/out by progress ranges declared in the HTML (data-range).
  */
 (() => {
@@ -21,7 +22,6 @@
   const body     = document.body;
   const hero     = $('[data-hero]');
   const stage    = $('[data-stage]');
-  const video    = $('[data-video]');
   const nav      = $('[data-nav]');
   const navBar   = $('[data-nav-progress]');
   const rail     = $('[data-rail]');
@@ -34,16 +34,27 @@
   }));
 
   /* ------------------------------------------------------------------ *
-   * Loader + video source
+   * Scenes: pick the resolution the screen actually needs
    * ------------------------------------------------------------------ */
-  const loader    = $('[data-loader]');
+  const conn = navigator.connection || {};
+  const portrait = innerHeight > innerWidth;
+  const neededWidth = (portrait ? innerWidth : Math.max(innerWidth, innerHeight * 16 / 9)) * (devicePixelRatio || 1);
+  const RES = neededWidth > 1400 && !conn.saveData ? '1080' : '720';
+
+  const scenes = $$('[data-scene]').map((v, i) => ({
+    v,
+    url: `assets/video/scene-${v.dataset.scene}-${RES}.mp4`,
+    dur: +v.dataset.dur,     // replaced by the real duration once loaded
+    ready: false,
+    progress: 0,
+  }));
+  let TOTAL = scenes.reduce((a, s) => a + s.dur, 0);
+
+  /* ------------------------------------------------------------------ *
+   * Loader
+   * ------------------------------------------------------------------ */
   const loaderBar = $('[data-loader-bar]');
   const loaderPct = $('[data-loader-pct]');
-
-  const conn = navigator.connection || {};
-  const small = matchMedia('(max-width: 820px)').matches || conn.saveData || /(^|-)(2g|3g)$/.test(conn.effectiveType || '');
-  const SRC = small ? 'assets/video/journey-854.mp4' : 'assets/video/journey-1280.mp4';
-
   let ready = false;
 
   function reveal() {
@@ -51,19 +62,17 @@
     ready = true;
     body.classList.remove('is-loading');
     measure();
-    forceSeek = true;
   }
 
   function setProgress(p) {
-    const pct = Math.round(p * 100);
     loaderBar.style.transform = `scaleX(${p})`;
-    loaderPct.textContent = pct;
+    loaderPct.textContent = Math.round(p * 100);
   }
 
-  async function loadVideo() {
-    if (reduceMotion) { reveal(); return; }
+  async function loadScene(s, onProgress) {
+    let src = s.url;
     try {
-      const res = await fetch(SRC);
+      const res = await fetch(s.url);
       if (!res.ok) throw new Error(res.status);
       const total = +res.headers.get('content-length') || 0;
       const reader = res.body.getReader();
@@ -74,45 +83,54 @@
         if (done) break;
         chunks.push(value);
         got += value.length;
-        if (total) setProgress(got / total);
+        if (total && onProgress) onProgress(got / total);
       }
-      video.src = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' }));
+      // In memory, so scrubbing never waits on the network.
+      src = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' }));
     } catch (err) {
-      // Fallback: let the browser stream it directly.
-      video.src = SRC;
+      // file:// or a failed fetch: let the browser read the file directly.
     }
-    setProgress(1);
-    if (video.readyState >= 2) return finish();
-    video.addEventListener('loadeddata', finish, { once: true });
-    video.addEventListener('error', () => {
-      // Some hosts refuse blob: media URLs; retry with the direct file.
-      if (video.src.startsWith('blob:')) {
-        video.addEventListener('error', reveal, { once: true });
-        video.src = SRC;
-        video.load();
-      } else reveal();
-    }, { once: true });
-    video.load();
-    setTimeout(reveal, 8000); // never trap the visitor behind the loader
+    await new Promise(resolve => {
+      const v = s.v;
+      const done = () => {
+        if (isFinite(v.duration) && v.duration > 0) s.dur = v.duration;
+        TOTAL = scenes.reduce((a, x) => a + x.dur, 0);
+        s.ready = true;
+        resolve();
+      };
+      v.addEventListener('loadeddata', done, { once: true });
+      v.addEventListener('error', () => {
+        // Some hosts refuse blob: media URLs; retry with the file itself.
+        if (src.startsWith('blob:')) {
+          v.addEventListener('error', resolve, { once: true });
+          v.src = s.url; v.load();
+        } else resolve();
+      }, { once: true });
+      v.preload = 'auto';
+      v.src = src;
+      v.load();
+    });
+  }
 
-    function finish() {
-      // Nudge to first frame so the poster hands off cleanly.
-      video.currentTime = 0;
-      setTimeout(reveal, 350);
-    }
+  async function loadAll() {
+    if (reduceMotion) { reveal(); return; }
+    setTimeout(reveal, 12000); // never trap the visitor behind the loader
+    await loadScene(scenes[0], setProgress);
+    setProgress(1);
+    setTimeout(reveal, 300);
+    for (const s of scenes.slice(1)) await loadScene(s);
   }
 
   /* ------------------------------------------------------------------ *
-   * Scroll -> video
+   * Scroll -> scene + time
    * ------------------------------------------------------------------ */
   let heroTop = 0, range = 1, vh = innerHeight;
   let target = 0;        // progress from scroll
   let current = 0;       // smoothed progress
-  let lastT = 0;         // last currentTime we asked for
   let lastNow = 0;
   let active = 0;        // index of active chapter for the rail
+  let shown = -1;        // index of the scene on screen
   let inHero = true;
-  let forceSeek = false;
 
   function measure() {
     vh = stage.offsetHeight || innerHeight;
@@ -128,27 +146,44 @@
     inHero = y > -vh && y < hero.offsetHeight;
   }
 
+  function seek(v, t) {
+    if (!v.seeking && Math.abs(v.currentTime - t) > 0.02) v.currentTime = t;
+  }
+
+  function updateVideo(p) {
+    // Which scene and where inside it.
+    let t = p * TOTAL, i = 0;
+    while (i < scenes.length - 1 && t >= scenes[i].dur) { t -= scenes[i].dur; i++; }
+
+    // If that scene hasn't arrived yet, hold on the last frame we do have.
+    let show = i;
+    while (show > 0 && !scenes[show].ready) show--;
+
+    scenes.forEach((s, j) => {
+      if (!s.ready) return;
+      const end = Math.max(0, s.dur - 0.05);
+      if (j === show) seek(s.v, show === i ? clamp(t, 0, end) : end);
+      // Park neighbours on their boundary frame so the hand-off is seamless.
+      else if (j < show) seek(s.v, end);
+      else seek(s.v, 0);
+    });
+
+    if (show !== shown) {
+      shown = show;
+      scenes.forEach((s, j) => s.v.classList.toggle('is-active', j === show));
+    }
+  }
+
   function frame(now) {
     const dt = Math.min(0.1, (now - lastNow) / 1000 || 0.016);
     lastNow = now;
 
     if (!reduceMotion) {
-      // Critically damped-ish follow: eased but never laggy.
-      const k = 1 - Math.exp(-dt * 10);
+      // Eased follow of the scroll position.
+      const k = 1 - Math.exp(-dt * 9);
       current += (target - current) * k;
       if (Math.abs(target - current) < 0.00004) current = target;
-
-      const dur = video.duration;
-      if (dur && isFinite(dur)) {
-        const t = clamp(current * dur, 0, dur - 0.04);
-        // Only re-seek when we've moved at least ~half a frame and no seek is mid-flight.
-        if ((forceSeek || Math.abs(t - lastT) > 0.02) && !video.seeking) {
-          video.currentTime = t;
-          lastT = t;
-          forceSeek = false;
-        }
-      }
-      stage.style.setProperty('--zoom', (1.02 + current * 0.05).toFixed(4));
+      updateVideo(current);
       updateChapters(current);
     }
 
@@ -163,12 +198,10 @@
       const enter = smooth(a, b, p);
       const exit = smooth(d, e, p);
       const v = enter * (1 - exit);
-      const el = c.el;
-      const ty = (1 - enter) * 34 - exit * 34;
-      el.style.opacity = v.toFixed(3);
-      el.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
-      el.style.filter = v < 0.98 ? `blur(${((1 - v) * 7).toFixed(1)}px)` : '';
-      el.classList.toggle('is-on', v > 0.01);
+      const ty = (1 - enter) * 14 - exit * 14;
+      c.el.style.opacity = v.toFixed(3);
+      c.el.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
+      c.el.classList.toggle('is-on', v > 0.01);
       if (v > bestV) { bestV = v; best = i; }
     });
     // Rail: chapters[0] is the intro, so rail item n maps to chapters[n + 1].
@@ -178,7 +211,6 @@
       railItems.forEach((li, i) => li.classList.toggle('is-active', i === idx));
     }
     cue.style.opacity = (1 - smooth(0, 0.04, p)).toFixed(3);
-    stage.style.setProperty('--grade', (0.75 + 0.25 * Math.sin(p * Math.PI * 3) ** 2).toFixed(3));
   }
 
   function updateChrome() {
@@ -240,5 +272,5 @@
   measure();
   requestAnimationFrame(frame);
   updateWords();
-  loadVideo();
+  loadAll();
 })();

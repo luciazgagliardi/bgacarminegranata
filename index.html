@@ -62,11 +62,13 @@
     <!-- ============ SCROLLYTELLING HERO ============ -->
     <section class="hero" data-hero aria-label="Recorrido en video por la historia de la bodega">
       <div class="stage" data-stage>
-        <video class="stage__video" data-video muted playsinline preload="auto"
-               poster="assets/img/poster.jpg" aria-hidden="true" tabindex="-1"></video>
+        <div class="stage__media" aria-hidden="true">
+          <video class="is-active" data-scene="1" data-dur="8.042" muted playsinline preload="none" poster="assets/img/poster.jpg" tabindex="-1"></video>
+          <video data-scene="2" data-dur="10" muted playsinline preload="none" tabindex="-1"></video>
+          <video data-scene="3" data-dur="10" muted playsinline preload="none" tabindex="-1"></video>
+          <video data-scene="4" data-dur="10" muted playsinline preload="none" tabindex="-1"></video>
+        </div>
         <div class="stage__grade" aria-hidden="true"></div>
-        <div class="stage__vignette" aria-hidden="true"></div>
-        <div class="stage__grain" aria-hidden="true"></div>
 
         <!-- 00 · Intro -->
         <div class="chapter chapter--intro" data-chapter data-range="-1 0 0.05 0.11">
@@ -78,28 +80,28 @@
 
         <!-- 01 · Viñedo -->
         <div class="chapter" data-chapter data-range="0.11 0.15 0.27 0.32">
-          <p class="eyebrow"><span>01</span> Mayor Drummond, Luján de Cuyo</p>
+          <p class="eyebrow">Mayor Drummond · Luján de Cuyo</p>
           <h2 class="title"><span class="title__year">1931<span class="sr">:</span></span> El <em>origen</em></h2>
           <p class="lede">Carmine Granata, inmigrante italiano, fundó la bodega en Mayor Drummond, Luján de Cuyo, dando inicio a una gran tradición vitivinícola.</p>
         </div>
 
         <!-- 02 · Casa -->
         <div class="chapter" data-chapter data-range="0.36 0.40 0.49 0.54">
-          <p class="eyebrow"><span>02</span> La casona</p>
+          <p class="eyebrow">La casona</p>
           <h2 class="title">De aulas<br>a <em>salas de cata</em></h2>
           <p class="lede">La antigua casona patronal funcionó durante años como la escuela Paula Albarracín de Sarmiento. Hoy, esos mismos espacios llenos de historia albergan nuestras salas de degustación.</p>
         </div>
 
         <!-- 03 · Bodega -->
         <div class="chapter" data-chapter data-range="0.60 0.64 0.74 0.79">
-          <p class="eyebrow"><span>03</span> Las piletas</p>
+          <p class="eyebrow">Las piletas</p>
           <h2 class="title">Arquitectura<br>y <em>memoria</em></h2>
           <p class="lede">En la visita se recorren las emblemáticas piletas de cemento construidas a principios del siglo pasado y un museo con maquinaria histórica de la elaboración del vino.</p>
         </div>
 
         <!-- 04 · Copa -->
         <div class="chapter chapter--final" data-chapter data-range="0.83 0.88 3 4">
-          <p class="eyebrow"><span>04</span> La familia</p>
+          <p class="eyebrow">La familia</p>
           <h2 class="title">Cuatro generaciones<br>de <em>pasión</em></h2>
           <p class="lede">Hoy, la tercera y cuarta generación de la familia mantienen vivo el legado, elaborando vino exactamente en el mismo lugar donde todo comenzó.</p>
           <div class="chapter__cta">
@@ -217,7 +219,7 @@
   </footer>
 
   <noscript>
-    <style>.loader{display:none}body.is-loading{overflow:auto}.hero{height:100svh}.stage__video{display:none}.stage{background:url(assets/img/poster.jpg) center/cover}.chapter--intro{opacity:1!important;visibility:visible}.chapter--intro>*{opacity:1!important}</style>
+    <style>.loader{display:none}body.is-loading{overflow:auto}.hero{height:100svh}.stage__media{display:none}.stage{background:url(assets/img/poster.jpg) center/cover}.chapter--intro{opacity:1!important;visibility:visible}.chapter--intro>*{opacity:1!important}</style>
   </noscript>
   <script src="js/main.js"></script>
 </body>

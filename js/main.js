@@ -84,7 +84,14 @@
     setProgress(1);
     if (video.readyState >= 2) return finish();
     video.addEventListener('loadeddata', finish, { once: true });
-    video.addEventListener('error', reveal, { once: true });
+    video.addEventListener('error', () => {
+      // Some hosts refuse blob: media URLs; retry with the direct file.
+      if (video.src.startsWith('blob:')) {
+        video.addEventListener('error', reveal, { once: true });
+        video.src = SRC;
+        video.load();
+      } else reveal();
+    }, { once: true });
     video.load();
     setTimeout(reveal, 8000); // never trap the visitor behind the loader
 
@@ -176,6 +183,8 @@
 
   function updateChrome() {
     nav.classList.toggle('is-solid', scrollY - heroTop > hero.offsetHeight - vh * 1.2);
+    // The intro already shows the full logo; the nav crest takes over once it fades.
+    nav.classList.toggle('is-intro', !reduceMotion && current < 0.07 && inHero);
     rail.classList.toggle('is-hidden', !(inHero && target < 0.985 && ready));
     railFill.style.setProperty('--p', current.toFixed(4));
     const doc = document.documentElement;

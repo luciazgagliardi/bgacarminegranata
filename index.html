@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Carmine Granata — Bodega en Luján de Cuyo, Mendoza</title>
-  <meta name="description" content="Recorré el viñedo, la casa y la bodega Carmine Granata, en Luján de Cuyo, Mendoza. Un viaje del viñedo a la copa.">
+  <title>Bodega Carmine Granata · Una historia con raíces profundas</title>
+  <meta name="description" content="Desde 1931 en Mayor Drummond, Luján de Cuyo. Recorre la antigua casona, las piletas de cemento y el museo de la Bodega Carmine Granata.">
   <meta name="theme-color" content="#120a0c">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Carmine Granata — Del viñedo a la copa">
-  <meta property="og:description" content="Un recorrido por el viñedo, la casa y la bodega, en Luján de Cuyo, Mendoza.">
+  <meta property="og:title" content="Bodega Carmine Granata: una historia con raíces profundas">
+  <meta property="og:description" content="Desde 1931 en Mayor Drummond, Luján de Cuyo, Mendoza.">
   <meta property="og:image" content="assets/img/og.jpg">
   <meta property="og:locale" content="es_AR">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&family=Marcellus&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="stylesheet" href="css/style.css">
   <link rel="preload" as="image" href="assets/img/poster.jpg">
 </head>
@@ -25,7 +26,7 @@
   <!-- Loader -->
   <div class="loader" data-loader role="status" aria-live="polite">
     <div class="loader__inner">
-      <span class="brand brand--lg"><span class="brand__mark" aria-hidden="true"></span>Carmine Granata</span>
+      <img class="loader__logo" src="assets/img/logo-lockup.webp" alt="Bodega Carmine Granata" width="1200" height="335">
       <div class="loader__bar"><i data-loader-bar></i></div>
       <p class="loader__label"><span data-loader-pct>0</span>% · Preparando el recorrido</p>
     </div>
@@ -33,32 +34,33 @@
 
   <!-- Navigation -->
   <header class="nav" data-nav>
-    <a class="brand" href="#top" aria-label="Carmine Granata — inicio">
-      <span class="brand__mark" aria-hidden="true"></span>Carmine Granata
+    <a class="brand" href="#top" aria-label="Bodega Carmine Granata, inicio">
+      <img class="brand__crest" src="assets/img/logo-crest.webp" alt="" width="360" height="325">
+      <img class="brand__word" src="assets/img/logo-wordmark.webp" alt="" width="1400" height="68">
     </a>
     <nav class="nav__links" aria-label="Principal">
       <a href="#recorrido">Recorrido</a>
       <a href="#visitas">Visitas</a>
       <a href="#contacto">Contacto</a>
     </nav>
-    <a class="btn btn--small" href="#contacto">Reservá tu visita</a>
+    <a class="btn btn--small" href="#contacto">Reserva tu visita</a>
     <div class="nav__progress" aria-hidden="true"><i data-nav-progress></i></div>
   </header>
 
   <!-- Chapter rail -->
   <aside class="rail" data-rail aria-label="Capítulos">
     <ol>
-      <li><a href="#" data-goto="0.21"><span>01</span><em>El viñedo</em></a></li>
-      <li><a href="#" data-goto="0.44"><span>02</span><em>La casa</em></a></li>
-      <li><a href="#" data-goto="0.69"><span>03</span><em>La bodega</em></a></li>
-      <li><a href="#" data-goto="0.93"><span>04</span><em>La copa</em></a></li>
+      <li><a href="#" data-goto="0.21"><span>01</span><em>El origen</em></a></li>
+      <li><a href="#" data-goto="0.44"><span>02</span><em>La casona</em></a></li>
+      <li><a href="#" data-goto="0.69"><span>03</span><em>Las piletas</em></a></li>
+      <li><a href="#" data-goto="0.93"><span>04</span><em>La familia</em></a></li>
     </ol>
     <i class="rail__fill" data-rail-fill></i>
   </aside>
 
   <main id="top">
     <!-- ============ SCROLLYTELLING HERO ============ -->
-    <section class="hero" data-hero aria-label="Recorrido en video: del viñedo a la copa">
+    <section class="hero" data-hero aria-label="Recorrido en video por la historia de la bodega">
       <div class="stage" data-stage>
         <video class="stage__video" data-video muted playsinline preload="auto"
                poster="assets/img/poster.jpg" aria-hidden="true" tabindex="-1"></video>
@@ -68,45 +70,46 @@
 
         <!-- 00 · Intro -->
         <div class="chapter chapter--intro" data-chapter data-range="-1 0 0.05 0.11">
-          <p class="eyebrow">Bodega · Luján de Cuyo · Mendoza</p>
-          <h1 class="display">Del viñedo<br><em>a la copa</em></h1>
-          <p class="lede">Un recorrido por el lugar donde nace cada uno de nuestros vinos.</p>
+          <h1 class="intro">
+            <img class="intro__logo" src="assets/img/logo-lockup.webp" alt="Bodega Carmine Granata" width="1200" height="335">
+            <span class="display">Una historia con <em>raíces profundas</em></span>
+          </h1>
         </div>
 
         <!-- 01 · Viñedo -->
         <div class="chapter" data-chapter data-range="0.11 0.15 0.27 0.32">
-          <p class="eyebrow"><span>01</span> El viñedo</p>
-          <h2 class="title">Amanece al pie<br>de la <em>cordillera</em></h2>
-          <p class="lede">Cepas que conocen el sol, el viento y el silencio de Mendoza. Todo empieza acá, entre hileras que se pierden en la montaña.</p>
+          <p class="eyebrow"><span>01</span> Mayor Drummond, Luján de Cuyo</p>
+          <h2 class="title"><span class="title__year">1931<span class="sr">:</span></span> El <em>origen</em></h2>
+          <p class="lede">Carmine Granata, inmigrante italiano, fundó la bodega en Mayor Drummond, Luján de Cuyo, dando inicio a una gran tradición vitivinícola.</p>
         </div>
 
         <!-- 02 · Casa -->
         <div class="chapter" data-chapter data-range="0.36 0.40 0.49 0.54">
-          <p class="eyebrow"><span>02</span> La casa</p>
-          <h2 class="title">Una casa de piedra<br>que <em>espera</em></h2>
-          <p class="lede">Al final del camino, la casa de la bodega. Un lugar para llegar despacio.</p>
+          <p class="eyebrow"><span>02</span> La casona</p>
+          <h2 class="title">De aulas<br>a <em>salas de cata</em></h2>
+          <p class="lede">La antigua casona patronal funcionó durante años como la escuela Paula Albarracín de Sarmiento. Hoy, esos mismos espacios llenos de historia albergan nuestras salas de degustación.</p>
         </div>
 
         <!-- 03 · Bodega -->
         <div class="chapter" data-chapter data-range="0.60 0.64 0.74 0.79">
-          <p class="eyebrow"><span>03</span> La bodega</p>
-          <h2 class="title">Luz, madera<br>y <em>tiempo</em></h2>
-          <p class="lede">Adentro, el aire es fresco y la luz entra en haces. El vino descansa a su ritmo.</p>
+          <p class="eyebrow"><span>03</span> Las piletas</p>
+          <h2 class="title">Arquitectura<br>y <em>memoria</em></h2>
+          <p class="lede">En la visita se recorren las emblemáticas piletas de cemento construidas a principios del siglo pasado y un museo con maquinaria histórica de la elaboración del vino.</p>
         </div>
 
         <!-- 04 · Copa -->
         <div class="chapter chapter--final" data-chapter data-range="0.83 0.88 3 4">
-          <p class="eyebrow"><span>04</span> La copa</p>
-          <h2 class="title">Ahora, <em>brindemos</em></h2>
-          <p class="lede">Cada recorrido termina igual: con una copa servida en la mesa de la bodega.</p>
+          <p class="eyebrow"><span>04</span> La familia</p>
+          <h2 class="title">Cuatro generaciones<br>de <em>pasión</em></h2>
+          <p class="lede">Hoy, la tercera y cuarta generación de la familia mantienen vivo el legado, elaborando vino exactamente en el mismo lugar donde todo comenzó.</p>
           <div class="chapter__cta">
-            <a class="btn" href="#contacto">Reservá tu visita</a>
+            <a class="btn" href="#contacto">Reserva tu visita</a>
             <a class="btn btn--ghost" href="#recorrido">Seguir explorando</a>
           </div>
         </div>
 
         <div class="cue" data-cue aria-hidden="true">
-          <span>Scrolleá para entrar</span>
+          <span>Desliza para conocer nuestro recorrido</span>
           <i></i>
         </div>
       </div>
@@ -114,6 +117,7 @@
 
     <!-- ============ MANIFIESTO ============ -->
     <section class="section manifesto" id="manifiesto" data-manifesto>
+      <img class="manifesto__crest" src="assets/img/logo-crest.webp" alt="" width="360" height="325" loading="lazy">
       <p class="eyebrow eyebrow--center">Nuestra filosofía</p>
       <p class="manifesto__text" data-words>Hay lugares donde el tiempo se mide en cosechas. Donde la tierra, la luz y la paciencia hacen su trabajo, y el vino solo tiene que llegar a la copa.</p>
     </section>
@@ -131,23 +135,23 @@
           <div class="card__body">
             <span class="card__n">01</span>
             <h3>El viñedo</h3>
-            <p>Hileras de vid al amanecer, con la montaña como telón de fondo.</p>
+            <p>Mayor Drummond, Luján de Cuyo: el lugar donde todo comenzó en 1931.</p>
           </div>
         </article>
         <article class="card" data-reveal>
-          <figure><img src="assets/img/still-2.jpg" alt="La casa de piedra al final del camino entre viñedos" loading="lazy" width="960" height="540"></figure>
+          <figure><img src="assets/img/still-2.jpg" alt="Casona de piedra al final de un camino entre viñedos" loading="lazy" width="960" height="540"></figure>
           <div class="card__body">
             <span class="card__n">02</span>
-            <h3>La casa</h3>
-            <p>Piedra, cipreses y un camino entre parras que invita a llegar sin apuro.</p>
+            <h3>La casona</h3>
+            <p>La antigua casona patronal, que fue escuela, hoy alberga las salas de degustación.</p>
           </div>
         </article>
         <article class="card" data-reveal>
-          <figure><img src="assets/img/still-3.jpg" alt="Interior de la bodega, con tinas y haces de luz" loading="lazy" width="960" height="540"></figure>
+          <figure><img src="assets/img/still-3.jpg" alt="Interior de la bodega, con piletas y haces de luz" loading="lazy" width="960" height="540"></figure>
           <div class="card__body">
             <span class="card__n">03</span>
-            <h3>La bodega</h3>
-            <p>Tinas de hormigón, madera y una luz que atraviesa el silencio.</p>
+            <h3>Las piletas</h3>
+            <p>Piletas de cemento de principios del siglo pasado y un museo de maquinaria histórica.</p>
           </div>
         </article>
         <article class="card" data-reveal>
@@ -155,7 +159,7 @@
           <div class="card__body">
             <span class="card__n">04</span>
             <h3>La copa</h3>
-            <p>El final del camino: el vino, servido en la mesa de degustación.</p>
+            <p>Vino elaborado por la tercera y cuarta generación, en el mismo lugar donde todo comenzó.</p>
           </div>
         </article>
       </div>
@@ -165,28 +169,28 @@
     <section class="section visits" id="visitas">
       <header class="section__head" data-reveal>
         <p class="eyebrow">Visitas y degustaciones</p>
-        <h2 class="title title--md">Vení a <em>recorrerlo</em></h2>
+        <h2 class="title title--md">Qué vas a <em>recorrer</em></h2>
       </header>
       <ul class="visits__list">
         <li data-reveal>
           <span class="visits__n">I</span>
           <div>
-            <h3>Paseo por el viñedo</h3>
-            <p>Caminá entre las hileras y conocé cómo se cuida la vid durante el año.</p>
+            <h3>Las piletas de cemento</h3>
+            <p>Las emblemáticas piletas construidas a principios del siglo pasado.</p>
           </div>
         </li>
         <li data-reveal>
           <span class="visits__n">II</span>
           <div>
-            <h3>Visita a la bodega</h3>
-            <p>Un recorrido por la casa, las tinas y la sala de guarda.</p>
+            <h3>El museo</h3>
+            <p>Maquinaria histórica de la elaboración del vino.</p>
           </div>
         </li>
         <li data-reveal>
           <span class="visits__n">III</span>
           <div>
-            <h3>Degustación</h3>
-            <p>Probá nuestros vinos en la mesa de la bodega, con quienes los hacen.</p>
+            <h3>Las salas de degustación</h3>
+            <p>En la antigua casona patronal, donde funcionó la escuela Paula Albarracín de Sarmiento.</p>
           </div>
         </li>
       </ul>
@@ -197,7 +201,7 @@
       <div class="contact__inner" data-reveal>
         <p class="eyebrow eyebrow--center">Reservas</p>
         <h2 class="title title--lg">Tu mesa en la bodega<br>te está <em>esperando</em></h2>
-        <p class="lede lede--center">Escribinos para coordinar tu visita y degustación.</p>
+        <p class="lede lede--center">Escríbenos para coordinar tu visita y degustación.</p>
         <div class="contact__cta">
           <!-- TODO: reemplazar por el WhatsApp / email real de reservas -->
           <a class="btn" href="https://www.bgacarminegranata.com.ar/monitor/inicio.html">Ir al sitio de la bodega</a>
@@ -207,8 +211,8 @@
   </main>
 
   <footer class="footer">
-    <span class="brand"><span class="brand__mark" aria-hidden="true"></span>Carmine Granata</span>
-    <p>Luján de Cuyo, Mendoza, Argentina</p>
+    <img class="footer__logo" src="assets/img/logo-lockup.webp" alt="Bodega Carmine Granata" width="1200" height="335" loading="lazy">
+    <p>Mayor Drummond, Luján de Cuyo, Mendoza · Desde 1931</p>
     <p class="footer__legal">Beber con moderación. Prohibida su venta a menores de 18 años.</p>
   </footer>
 

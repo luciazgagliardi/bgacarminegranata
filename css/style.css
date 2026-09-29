@@ -17,6 +17,7 @@
 
   --serif: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
   --sans:  "Jost", "Helvetica Neue", Arial, sans-serif;
+  --caps:  "Marcellus", Optima, Candara, "Times New Roman", serif;   /* echoes the wordmark */
 
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
   --ease:   cubic-bezier(.22, .61, .36, 1);
@@ -51,7 +52,8 @@ ol, ul { list-style: none; }
 
 /* ---------- Type ---------- */
 .eyebrow {
-  font-size: .72rem;
+  font-family: var(--caps);
+  font-size: .74rem;
   font-weight: 400;
   letter-spacing: .28em;
   text-transform: uppercase;
@@ -59,6 +61,8 @@ ol, ul { list-style: none; }
   display: flex; align-items: center; gap: .9rem;
 }
 .eyebrow span { color: var(--cream); }
+/* Marcellus figures read as letters (0 → O), so numbers use the serif. */
+.eyebrow span, .rail a span, .card__n { font-family: var(--serif); font-size: 1.15em; font-weight: 500; font-variant-numeric: lining-nums; letter-spacing: .12em; }
 .eyebrow span::after { content: ""; display: inline-block; width: 2.5rem; height: 1px; background: var(--carmine); vertical-align: middle; margin-left: .9rem; }
 .eyebrow--center { justify-content: center; }
 
@@ -81,21 +85,17 @@ ol, ul { list-style: none; }
   color: rgba(243, 233, 220, .82);
 }
 .lede--center { margin-inline: auto; text-align: center; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Brand ---------- */
 .brand {
-  display: inline-flex; align-items: center; gap: .7rem;
-  font-family: var(--serif);
-  font-size: 1.25rem; font-weight: 500;
-  letter-spacing: .22em; text-transform: uppercase;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: .95rem;
+  transition: opacity .6s var(--ease);
 }
-.brand--lg { font-size: clamp(1.4rem, 3.4vw, 2rem); }
-.brand__mark {
-  width: .8em; height: .8em; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #d6394f, var(--carmine) 45%, var(--garnet));
-  box-shadow: 0 0 0 1px rgba(243,233,220,.35), 0 0 18px rgba(163,24,47,.55);
-}
+.brand img { width: auto; filter: drop-shadow(0 1px 10px rgba(0,0,0,.35)); }
+.brand__crest { height: 2.5rem; }
+.brand__word  { height: .74rem; }
+.nav.is-intro .brand { opacity: 0; pointer-events: none; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -124,7 +124,8 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
 .loader__inner { display: grid; gap: 1.6rem; justify-items: center; padding: var(--gutter); text-align: center; }
 .loader__bar { width: min(16rem, 60vw); height: 1px; background: var(--line); overflow: hidden; }
 .loader__bar i { display: block; height: 100%; width: 100%; background: var(--carmine); transform: scaleX(0); transform-origin: left; transition: transform .25s linear; }
-.loader__label { font-size: .7rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.loader__logo { width: min(18rem, 64vw); height: auto; }
+.loader__label { font-family: var(--caps); font-size: .7rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
 
 /* ---------- Nav ---------- */
 .nav {
@@ -161,6 +162,7 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
 .rail.is-hidden { opacity: 0; pointer-events: none; }
 .rail ol { display: grid; gap: 1.6rem; }
 .rail a {
+  font-family: var(--caps);
   display: flex; align-items: center; justify-content: flex-end; gap: .8rem;
   font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
   color: rgba(243,233,220,.5);
@@ -176,7 +178,7 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
 }
 
 /* ---------- Hero / scrollytelling ---------- */
-.hero { position: relative; height: 900vh; background: var(--ink); }
+.hero { position: relative; height: 1000vh; background: var(--ink); }
 .stage {
   position: sticky; top: 0;
   height: 100vh; height: 100svh;
@@ -214,7 +216,7 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
 
 .chapter {
   position: absolute; left: var(--gutter); bottom: clamp(4.5rem, 12vh, 9rem);
-  width: min(46rem, calc(100% - var(--gutter) * 2));
+  width: min(60rem, calc(100% - var(--gutter) * 2));
   display: grid; gap: 1.4rem;
   opacity: 0; visibility: hidden;
   will-change: opacity, transform;
@@ -223,12 +225,30 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
 .chapter.is-on { visibility: visible; }
 .chapter--final { bottom: clamp(4rem, 10vh, 7rem); }
 .chapter__cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: .6rem; }
-.chapter--intro { text-shadow: 0 4px 60px rgba(0,0,0,.5); }
+.chapter--intro {
+  top: 0; bottom: 0; left: var(--gutter); right: var(--gutter); width: auto;
+  align-content: center; justify-items: center; text-align: center;
+  padding-top: 3rem;
+  text-shadow: 0 4px 60px rgba(0,0,0,.5);
+}
+.chapter--intro::before {
+  content: ""; position: absolute; inset: 18% -10%; z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(18,10,12,.55), transparent 68%);
+}
+.intro { display: grid; justify-items: center; gap: clamp(1.4rem, 3vw, 2.4rem); }
+.intro__logo { width: clamp(14rem, 26vw, 23rem); height: auto; filter: drop-shadow(0 4px 24px rgba(0,0,0,.45)); }
+.intro .display { display: block; font-size: clamp(2.7rem, 8.2vw, 8rem); max-width: 14ch; }
+.title__year {
+  display: block;
+  font-size: 1.6em; line-height: .88; letter-spacing: -.02em;
+  font-variant-numeric: oldstyle-nums;
+}
 
 .cue {
   position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
   display: grid; justify-items: center; gap: .7rem;
-  font-size: .64rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(243,233,220,.75);
+  width: max-content; max-width: calc(100% - 2rem); text-align: center;
+  font-family: var(--caps); font-size: .66rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(243,233,220,.75);
   transition: opacity .5s;
 }
 .cue i { width: 1px; height: 2.8rem; background: linear-gradient(var(--cream), transparent); transform-origin: top; animation: cue 2.2s var(--ease) infinite; }
@@ -254,6 +274,7 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
     var(--ink);
   text-align: center;
 }
+.manifesto__crest { width: 4.5rem; height: auto; opacity: .85; }
 .manifesto__text {
   max-width: 62rem;
   font-family: var(--serif); font-weight: 300;
@@ -271,7 +292,7 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
 .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.6s var(--ease), filter .8s; filter: saturate(.9) brightness(.92); }
 .card:hover img { transform: scale(1.06); filter: none; }
 .card__body { padding-top: 1.2rem; display: grid; gap: .5rem; }
-.card__n { font-size: .7rem; letter-spacing: .28em; color: var(--carmine); }
+.card__n { font-size: .78rem; letter-spacing: .28em; color: var(--carmine); }
 .card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.9rem; line-height: 1.1; }
 .card p { color: var(--muted); font-size: .95rem; }
 .journey__grid .card:nth-child(2) { transition-delay: .12s; }
@@ -308,7 +329,7 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
   border-top: 1px solid var(--line);
   color: var(--muted); font-size: .85rem;
 }
-.footer .brand { color: var(--cream); font-size: 1.05rem; }
+.footer__logo { width: min(15rem, 60vw); height: auto; opacity: .92; margin-bottom: .6rem; }
 .footer__legal { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
 
 /* ---------- Responsive ---------- */
@@ -316,12 +337,13 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
   .journey__grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
-  .hero { height: 750vh; }
+  .hero { height: 850vh; }
   .rail { display: none; }
   .nav { gap: 1rem; }
   .nav__links { display: none; }
   .nav .btn { margin-left: auto; }
-  .brand { font-size: .9rem; letter-spacing: .12em; gap: .5rem; }
+  .brand__word { display: none; }
+  .brand__crest { height: 2.2rem; }
   .btn--small { padding: .6rem .9rem; font-size: .62rem; letter-spacing: .14em; }
   .stage__grade {
     background:
@@ -329,7 +351,8 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
       linear-gradient(180deg, rgba(18,10,12,.55) 0%, rgba(18,10,12,0) 20%);
   }
   .chapter { bottom: 5.5rem; gap: 1rem; }
-  .cue { display: none; }
+  .cue { bottom: 1.2rem; letter-spacing: .2em; font-size: .6rem; }
+  .cue i { height: 2rem; }
   .eyebrow { letter-spacing: .2em; font-size: .66rem; }
   .journey__grid { grid-template-columns: 1fr 1fr; }
   .card h3 { font-size: 1.45rem; }
@@ -349,6 +372,6 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
   .hero { height: auto; }
   .stage { position: relative; height: auto; min-height: 100svh; display: grid; align-content: end; gap: 3rem; padding: 9rem var(--gutter) 5rem; }
   .stage__video, .cue { display: none; }
-  .chapter { position: relative; left: auto; bottom: auto; opacity: 1 !important; visibility: visible; transform: none !important; filter: none !important; }
+  .chapter { position: relative; inset: auto; opacity: 1 !important; visibility: visible; transform: none !important; filter: none !important; }
   .rail { display: none; }
 }

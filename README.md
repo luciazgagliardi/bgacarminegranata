@@ -17,7 +17,7 @@ Preview: `npx http-server . -p 8080` and open http://localhost:8080. Any static 
 ## Chapters
 Each `.chapter` in `index.html` has `data-range="fadeInStart fadeInEnd fadeOutStart fadeOutEnd"`,
 expressed as scroll progress 0–1 through the video (38 s ≈ 913 frames).
-Scroll length is `.hero { height: 900vh }` in `css/style.css`.
+Scroll length is `.hero { height: 1000vh }` in `css/style.css`.
 
 ## Re-encoding the video
 Scrubbing needs every frame to be a keyframe (`-g 1`), otherwise seeking stutters:
@@ -28,7 +28,8 @@ ffmpeg -i in.mp4 -vf scale=1280:720 -c:v libx264 -preset slow -crf 27 -g 1 -bf 0
 ```
 
 ## To review before publishing
-- Logo: the header uses a text wordmark + red dot; swap in the real logo.
-- Copy is a draft written from the footage; check tone and facts with the winery.
+- Hero chapter text is the winery's own copy. The sections below the video (cards, visits,
+  contact) reuse those facts in draft wording; review before publishing.
+- Logos live in `assets/img/logo-*.webp` (tinted cream for the dark page) and `favicon.png`.
 - Contact section links to the main site; replace with the real WhatsApp / email.
-- Palette and fonts (Cormorant Garamond + Jost) were chosen from the brand name and footage.
+- Fonts: Cormorant Garamond (headings), Jost (body), Marcellus (labels; close to the wordmark).

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Carmine Granata — Bodega en Luján de Cuyo, Mendoza</title>
+  <meta name="description" content="Recorré el viñedo, la casa y la bodega Carmine Granata, en Luján de Cuyo, Mendoza. Un viaje del viñedo a la copa.">
+  <meta name="theme-color" content="#120a0c">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Carmine Granata — Del viñedo a la copa">
+  <meta property="og:description" content="Un recorrido por el viñedo, la casa y la bodega, en Luján de Cuyo, Mendoza.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta property="og:locale" content="es_AR">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preload" as="image" href="assets/img/poster.jpg">
+</head>
+<body class="is-loading">
+  <a class="skip" href="#manifiesto">Saltar la animación</a>
+
+  <!-- Loader -->
+  <div class="loader" data-loader role="status" aria-live="polite">
+    <div class="loader__inner">
+      <span class="brand brand--lg"><span class="brand__mark" aria-hidden="true"></span>Carmine Granata</span>
+      <div class="loader__bar"><i data-loader-bar></i></div>
+      <p class="loader__label"><span data-loader-pct>0</span>% · Preparando el recorrido</p>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <header class="nav" data-nav>
+    <a class="brand" href="#top" aria-label="Carmine Granata — inicio">
+      <span class="brand__mark" aria-hidden="true"></span>Carmine Granata
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#recorrido">Recorrido</a>
+      <a href="#visitas">Visitas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="btn btn--small" href="#contacto">Reservá tu visita</a>
+    <div class="nav__progress" aria-hidden="true"><i data-nav-progress></i></div>
+  </header>
+
+  <!-- Chapter rail -->
+  <aside class="rail" data-rail aria-label="Capítulos">
+    <ol>
+      <li><a href="#" data-goto="0.21"><span>01</span><em>El viñedo</em></a></li>
+      <li><a href="#" data-goto="0.44"><span>02</span><em>La casa</em></a></li>
+      <li><a href="#" data-goto="0.69"><span>03</span><em>La bodega</em></a></li>
+      <li><a href="#" data-goto="0.93"><span>04</span><em>La copa</em></a></li>
+    </ol>
+    <i class="rail__fill" data-rail-fill></i>
+  </aside>
+
+  <main id="top">
+    <!-- ============ SCROLLYTELLING HERO ============ -->
+    <section class="hero" data-hero aria-label="Recorrido en video: del viñedo a la copa">
+      <div class="stage" data-stage>
+        <video class="stage__video" data-video muted playsinline preload="auto"
+               poster="assets/img/poster.jpg" aria-hidden="true" tabindex="-1"></video>
+        <div class="stage__grade" aria-hidden="true"></div>
+        <div class="stage__vignette" aria-hidden="true"></div>
+        <div class="stage__grain" aria-hidden="true"></div>
+
+        <!-- 00 · Intro -->
+        <div class="chapter chapter--intro" data-chapter data-range="-1 0 0.05 0.11">
+          <p class="eyebrow">Bodega · Luján de Cuyo · Mendoza</p>
+          <h1 class="display">Del viñedo<br><em>a la copa</em></h1>
+          <p class="lede">Un recorrido por el lugar donde nace cada uno de nuestros vinos.</p>
+        </div>
+
+        <!-- 01 · Viñedo -->
+        <div class="chapter" data-chapter data-range="0.11 0.15 0.27 0.32">
+          <p class="eyebrow"><span>01</span> El viñedo</p>
+          <h2 class="title">Amanece al pie<br>de la <em>cordillera</em></h2>
+          <p class="lede">Cepas que conocen el sol, el viento y el silencio de Mendoza. Todo empieza acá, entre hileras que se pierden en la montaña.</p>
+        </div>
+
+        <!-- 02 · Casa -->
+        <div class="chapter" data-chapter data-range="0.36 0.40 0.49 0.54">
+          <p class="eyebrow"><span>02</span> La casa</p>
+          <h2 class="title">Una casa de piedra<br>que <em>espera</em></h2>
+          <p class="lede">Al final del camino, la casa de la bodega. Un lugar para llegar despacio.</p>
+        </div>
+
+        <!-- 03 · Bodega -->
+        <div class="chapter" data-chapter data-range="0.60 0.64 0.74 0.79">
+          <p class="eyebrow"><span>03</span> La bodega</p>
+          <h2 class="title">Luz, madera<br>y <em>tiempo</em></h2>
+          <p class="lede">Adentro, el aire es fresco y la luz entra en haces. El vino descansa a su ritmo.</p>
+        </div>
+
+        <!-- 04 · Copa -->
+        <div class="chapter chapter--final" data-chapter data-range="0.83 0.88 3 4">
+          <p class="eyebrow"><span>04</span> La copa</p>
+          <h2 class="title">Ahora, <em>brindemos</em></h2>
+          <p class="lede">Cada recorrido termina igual: con una copa servida en la mesa de la bodega.</p>
+          <div class="chapter__cta">
+            <a class="btn" href="#contacto">Reservá tu visita</a>
+            <a class="btn btn--ghost" href="#recorrido">Seguir explorando</a>
+          </div>
+        </div>
+
+        <div class="cue" data-cue aria-hidden="true">
+          <span>Scrolleá para entrar</span>
+          <i></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MANIFIESTO ============ -->
+    <section class="section manifesto" id="manifiesto" data-manifesto>
+      <p class="eyebrow eyebrow--center">Nuestra filosofía</p>
+      <p class="manifesto__text" data-words>Hay lugares donde el tiempo se mide en cosechas. Donde la tierra, la luz y la paciencia hacen su trabajo, y el vino solo tiene que llegar a la copa.</p>
+    </section>
+
+    <!-- ============ RECORRIDO ============ -->
+    <section class="section journey" id="recorrido">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">El recorrido</p>
+        <h2 class="title title--md">Cuatro lugares,<br>una sola <em>historia</em></h2>
+      </header>
+
+      <div class="journey__grid">
+        <article class="card" data-reveal>
+          <figure><img src="assets/img/still-1.jpg" alt="Hileras de vid al amanecer, con la cordillera al fondo" loading="lazy" width="960" height="540"></figure>
+          <div class="card__body">
+            <span class="card__n">01</span>
+            <h3>El viñedo</h3>
+            <p>Hileras de vid al amanecer, con la montaña como telón de fondo.</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <figure><img src="assets/img/still-2.jpg" alt="La casa de piedra al final del camino entre viñedos" loading="lazy" width="960" height="540"></figure>
+          <div class="card__body">
+            <span class="card__n">02</span>
+            <h3>La casa</h3>
+            <p>Piedra, cipreses y un camino entre parras que invita a llegar sin apuro.</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <figure><img src="assets/img/still-3.jpg" alt="Interior de la bodega, con tinas y haces de luz" loading="lazy" width="960" height="540"></figure>
+          <div class="card__body">
+            <span class="card__n">03</span>
+            <h3>La bodega</h3>
+            <p>Tinas de hormigón, madera y una luz que atraviesa el silencio.</p>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <figure><img src="assets/img/still-4.jpg" alt="Vino tinto servido en una copa" loading="lazy" width="960" height="540"></figure>
+          <div class="card__body">
+            <span class="card__n">04</span>
+            <h3>La copa</h3>
+            <p>El final del camino: el vino, servido en la mesa de degustación.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ VISITAS ============ -->
+    <section class="section visits" id="visitas">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">Visitas y degustaciones</p>
+        <h2 class="title title--md">Vení a <em>recorrerlo</em></h2>
+      </header>
+      <ul class="visits__list">
+        <li data-reveal>
+          <span class="visits__n">I</span>
+          <div>
+            <h3>Paseo por el viñedo</h3>
+            <p>Caminá entre las hileras y conocé cómo se cuida la vid durante el año.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="visits__n">II</span>
+          <div>
+            <h3>Visita a la bodega</h3>
+            <p>Un recorrido por la casa, las tinas y la sala de guarda.</p>
+          </div>
+        </li>
+        <li data-reveal>
+          <span class="visits__n">III</span>
+          <div>
+            <h3>Degustación</h3>
+            <p>Probá nuestros vinos en la mesa de la bodega, con quienes los hacen.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section class="section contact" id="contacto">
+      <div class="contact__inner" data-reveal>
+        <p class="eyebrow eyebrow--center">Reservas</p>
+        <h2 class="title title--lg">Tu mesa en la bodega<br>te está <em>esperando</em></h2>
+        <p class="lede lede--center">Escribinos para coordinar tu visita y degustación.</p>
+        <div class="contact__cta">
+          <!-- TODO: reemplazar por el WhatsApp / email real de reservas -->
+          <a class="btn" href="https://www.bgacarminegranata.com.ar/monitor/inicio.html">Ir al sitio de la bodega</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand"><span class="brand__mark" aria-hidden="true"></span>Carmine Granata</span>
+    <p>Luján de Cuyo, Mendoza, Argentina</p>
+    <p class="footer__legal">Beber con moderación. Prohibida su venta a menores de 18 años.</p>
+  </footer>
+
+  <noscript>
+    <style>.loader{display:none}body.is-loading{overflow:auto}.hero{height:100svh}.stage__video{display:none}.stage{background:url(assets/img/poster.jpg) center/cover}.chapter--intro{opacity:1!important;visibility:visible}.chapter--intro>*{opacity:1!important}</style>
+  </noscript>
+  <script src="js/main.js"></script>
+</body>
+</html>

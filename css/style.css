@@ -188,6 +188,9 @@ body:not(.is-loading) .loader { opacity: 0; visibility: hidden; pointer-events: 
   background: var(--ink) url(../assets/img/poster.jpg) center / cover no-repeat;
 }
 .stage__media { position: absolute; inset: 0; }
+.stage__ambient, .marks { display: none; }
+.marks li { width: 1.6rem; height: 2px; background: rgba(243,233,220,.28); transition: background .5s, width .5s var(--ease); }
+.marks li.is-active { width: 2.6rem; background: var(--sepia); }
 .stage__media video {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover;
@@ -358,15 +361,26 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
    uncropped, with the text in the dark space below it. */
 @media (max-aspect-ratio: 1/1) {
   .stage { background: var(--ink); --media-top: max(calc(env(safe-area-inset-top, 0px) + 5rem), 14svh); }
+  .stage__ambient {
+    display: block; position: absolute; inset: -12%; width: 124%; height: 124%;
+    filter: blur(26px) saturate(1.3) brightness(.62);
+  }
   .stage__media {
     inset: auto 0; top: var(--media-top);
     aspect-ratio: 16 / 9; width: 100%;
+    /* feather the band into the colour around it */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 80%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0, #000 14%, #000 80%, transparent 100%);
   }
-  .stage__media::after {
-    content: ""; position: absolute; inset: auto 0 0 0; height: 30%;
-    background: linear-gradient(0deg, var(--ink), transparent);
+  .stage__grade {
+    background:
+      radial-gradient(ellipse 90% 50% at 50% 62%, rgba(18,10,12,.35), transparent 70%),
+      linear-gradient(180deg, rgba(18,10,12,.4) 0%, rgba(18,10,12,0) 14%, rgba(18,10,12,0) 42%, rgba(18,10,12,.45) 78%, rgba(18,10,12,.75) 100%);
   }
-  .stage__grade { display: none; }
+  .marks {
+    display: flex; gap: .5rem;
+    position: absolute; left: 50%; bottom: calc(1.6rem + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  }
   .chapter { bottom: auto; top: calc(var(--media-top) + 56.25vw + 1.5rem); }
   .chapter--intro { top: calc(var(--media-top) + 56.25vw); bottom: 3rem; padding-top: 0; }
   .chapter--final { bottom: auto; }
@@ -380,7 +394,7 @@ body:not(.is-loading) .chapter--intro > * { opacity: 1; }
   .manifesto__text .w { opacity: 1; }
   .hero { height: auto; }
   .stage { position: relative; height: auto; min-height: 100svh; display: grid; align-content: end; gap: 3rem; padding: 9rem var(--gutter) 5rem; }
-  .stage__media, .stage__grade, .cue { display: none; }
+  .stage__media, .stage__grade, .stage__ambient, .marks, .cue { display: none; }
   .chapter { position: relative; inset: auto; opacity: 1 !important; visibility: visible; transform: none !important; filter: none !important; }
   .rail { display: none; }
 }

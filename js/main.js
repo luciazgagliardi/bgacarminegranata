@@ -28,6 +28,10 @@
   const railFill = $('[data-rail-fill]');
   const railItems = $$('li', rail);
   const cue      = $('[data-cue]');
+  const marks    = $$('li', $('[data-marks]'));
+  const ambient  = $('.stage__ambient');
+  const actx     = ambient && ambient.getContext('2d');
+  const tall     = matchMedia('(max-aspect-ratio: 1/1)');
   const chapters = $$('[data-chapter]').map(el => ({
     el,
     r: el.dataset.range.split(/\s+/).map(Number),
@@ -170,9 +174,22 @@
 
     if (show !== shown) {
       shown = show;
+      drawAmbient();
       scenes.forEach((s, j) => s.v.classList.toggle('is-active', j === show));
     }
   }
+
+  // Upright phones: the space around the widescreen band takes its colour
+  // from the frame on screen (a tiny copy, blurred by CSS).
+  function drawAmbient() {
+    const s = scenes[shown];
+    if (!actx || !tall.matches || !s || s.v.readyState < 2) return;
+    try { actx.drawImage(s.v, 0, 0, ambient.width, ambient.height); } catch (e) {}
+  }
+  scenes.forEach(s => {
+    s.v.addEventListener('seeked', () => { if (scenes[shown] === s) drawAmbient(); });
+    s.v.addEventListener('loadeddata', () => { if (scenes[shown] === s) drawAmbient(); });
+  });
 
   function frame(now) {
     const dt = Math.min(0.1, (now - lastNow) / 1000 || 0.016);
@@ -209,8 +226,11 @@
     if (idx !== active) {
       active = idx;
       railItems.forEach((li, i) => li.classList.toggle('is-active', i === idx));
+      marks.forEach((li, i) => li.classList.toggle('is-active', i === idx));
     }
-    cue.style.opacity = (1 - smooth(0, 0.04, p)).toFixed(3);
+    const cueV = 1 - smooth(0, 0.04, p);
+    cue.style.opacity = cueV.toFixed(3);
+    marks[0].parentNode.style.opacity = (1 - cueV).toFixed(3);
   }
 
   function updateChrome() {

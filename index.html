@@ -62,6 +62,7 @@
     <!-- ============ SCROLLYTELLING HERO ============ -->
     <section class="hero" data-hero aria-label="Recorrido en video por la historia de la bodega">
       <div class="stage" data-stage>
+        <canvas class="stage__ambient" width="40" height="24" aria-hidden="true"></canvas>
         <div class="stage__media" aria-hidden="true">
           <video class="is-active" data-scene="1" data-dur="8.042" muted playsinline preload="none" poster="assets/img/poster.jpg" tabindex="-1"></video>
           <video data-scene="2" data-dur="10" muted playsinline preload="none" tabindex="-1"></video>
@@ -109,6 +110,8 @@
             <a class="btn btn--ghost" href="#recorrido">Seguir explorando</a>
           </div>
         </div>
+
+        <ol class="marks" data-marks aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
 
         <div class="cue" data-cue aria-hidden="true">
           <span>Desliza para conocer nuestro recorrido</span>
